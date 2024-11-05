@@ -38,7 +38,7 @@ const Community = () => {
         <div className="community">
             {images.length > 0 ? (
                 images.map((url, index) => (
-                    <img key={index} src={url} alt={`Community Image ${index + 1}`} />
+                    <img key={index} src={url} alt="aa" />
                 ))
             ) : (
                 <p>No images available.</p>
