@@ -1,5 +1,9 @@
 import React, {useState} from 'react';
 import "./index.css"
+
+
+import { Cloudinary } from 'cloudinary-core';
+
 const Generator = () => {
 
     const [isLoading, setIsLoading] = useState(false);
@@ -14,45 +18,73 @@ const handleChange = (e)=>{
 }
     console.log(inputVal)
 
-const handlePrompt = async (data)=>{
-        console.log(data)
+
+
+    const cloudinary = new Cloudinary({ cloud_name: 'dxycuikv8' });
+
+    const handlePrompt = async (data) => {
+        console.log(data);
         setIsLoading(true);
-        setRes(inputVal)
-        setInputVal("")
-    setInit(false)
+        setRes(inputVal);
+        setInputVal("");
+        setInit(false);
 
-    try {
-        const response = await fetch(
-            "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev",
-            {
-                headers: {
-                    Authorization: "Bearer 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",
-                    "Content-Type": "application/json",
-                },
-                method: "POST",
-                body: JSON.stringify(data),
+        try {
+            // Fetch the generated image from your API
+            const response = await fetch(
+                "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev",
+                {
+                    headers: {
+                        Authorization: "Bearer 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",
+                        "Content-Type": "application/json",
+                    },
+                    method: "POST",
+                    body: JSON.stringify(data),
+                }
+            );
+
+            if (!response.ok) {
+                const error = await response.json();
+                console.error("API error:", error);
+                setIsLoading(false);
+                return error;
             }
-        );
-        if (!response.ok) {
-            const error = await response.json();
-            console.error("API error:", error);
-            return error;
+
+            // Convert response to blob and create a URL for display
+            const resultBlob = await response.blob();
+            const imgUrl = URL.createObjectURL(resultBlob);
+            setImgUrl(imgUrl);
+
+            // Convert the blob to a File for Cloudinary upload
+            const file = new File([resultBlob], "generated_image.png", { type: "image/png" });
+
+            // Use Cloudinary's client-side upload method (unsigned)
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("upload_preset", "unsigned_preset"); // Replace with your preset
+
+            // Upload to Cloudinary
+            const uploadResult = await fetch(
+                `https://api.cloudinary.com/v1_1/${cloudinary.config().cloud_name}/image/upload`,
+                {
+                    method: "POST",
+                    body: formData,
+                }
+            );
+            const uploadData = await uploadResult.json();
+
+            // Set the Cloudinary URL in state to render in the community block
+            setImgUrl(uploadData.secure_url);
+            setIsLoading(false);
+
+            console.log("Uploaded to Cloudinary:", uploadData.secure_url);
+
+        } catch (error) {
+            console.error("Network or other error:", error);
+            setIsLoading(false);
         }
-        const result = await response.blob();
-        console.log(result);
-        const imgUrl = URL.createObjectURL(result);
-        console.log(imgUrl);
+    };
 
-
-        setImgUrl(imgUrl);
-        setIsLoading(false);
-
-
-
-    } catch (error) {
-        console.error("Network or other error:", error);
-    }
-}
 
 
 
