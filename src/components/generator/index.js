@@ -2,7 +2,13 @@ import React, {useState} from 'react';
 import "./index.css"
 
 
-import { Cloudinary } from 'cloudinary-core';
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = 'https://grvmrfcaoijjkwosfekd.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdydm1yZmNhb2lqamt3b3NmZWtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzA5MTcwMDYsImV4cCI6MjA0NjQ5MzAwNn0.6tsyxNznDpcnHOiKepP_WHdCWbKX29d-GkgmLS-uxdY';
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
 
 const Generator = () => {
 
@@ -20,7 +26,7 @@ const handleChange = (e)=>{
 
 
 
-    const cloudinary = new Cloudinary({ cloud_name: 'dxycuikv8' });
+
 
     const handlePrompt = async (data) => {
         console.log(data);
@@ -50,34 +56,30 @@ const handleChange = (e)=>{
                 return error;
             }
 
-            // Convert response to blob and create a URL for display
             const resultBlob = await response.blob();
-            const imgUrl = URL.createObjectURL(resultBlob);
-            setImgUrl(imgUrl);
+            // const imgUrl = URL.createObjectURL(resultBlob);
+            // setImgUrl(imgUrl);
 
-            // Convert the blob to a File for Cloudinary upload
-            const file = new File([resultBlob], "generated_image.png", { type: "image/png" });
+            const fileName = `${Date.now()}.png`;
 
-            // Use Cloudinary's client-side upload method (unsigned)
-            const formData = new FormData();
-            formData.append("file", file);
-            formData.append("upload_preset", "unsigned_preset"); // Replace with your preset
+            const { data: fileData, error: uploadError } = await supabase.storage
+                .from('t2image')  // Replace with your bucket name
+                .upload(fileName, resultBlob, {
+                    cacheControl: '3600',
+                    upsert: false,
+                });
 
-            // Upload to Cloudinary
-            const uploadResult = await fetch(
-                `https://api.cloudinary.com/v1_1/${cloudinary.config().cloud_name}/image/upload`,
-                {
-                    method: "POST",
-                    body: formData,
-                }
-            );
-            const uploadData = await uploadResult.json();
+            if (uploadError) throw uploadError;
 
-            // Set the Cloudinary URL in state to render in the community block
-            setImgUrl(uploadData.secure_url);
+            // Retrieve the public URL of the stored image
+            const { publicURL } = supabase.storage
+                .from('t2image')
+                .getPublicUrl(fileName);
+
+            console.log(publicURL, ">>>>>>>>>>>>>>")
             setIsLoading(false);
+            setImgUrl(fileName); // Use public URL to display the image
 
-            console.log("Uploaded to Cloudinary:", uploadData.secure_url);
 
         } catch (error) {
             console.error("Network or other error:", error);
@@ -114,7 +116,7 @@ const handleChange = (e)=>{
                             :
                             <div>
                                 <h2>Prompt:{res}</h2>
-                                <img id="img" src={imgUrl} alt="gg"/>
+                                <img id="img" src={`https://grvmrfcaoijjkwosfekd.supabase.co/storage/v1/object/public/t2image/${imgUrl}`} alt="gg" />
                                 <a href={imgUrl} download="generated_img">
                                     <button id="downloadButton">Download Image</button>
                                 </a>

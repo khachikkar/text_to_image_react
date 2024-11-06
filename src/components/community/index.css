@@ -1,0 +1,27 @@
+.community-image {
+    width: 100%; /* Ensures image scales within grid cell */
+    height: auto; /* Maintains aspect ratio */
+    border-radius: 10px;
+}
+
+.images-grid {
+    display: grid;
+    gap: 10px;
+    padding: 10px;
+    grid-template-columns: 1fr; /* Default: Single column for mobile */
+    /*background-color: red;*/
+}
+
+/* Medium screens (tablets) */
+@media (min-width: 768px) {
+    .images-grid {
+        grid-template-columns: 1fr 1fr; /* Two columns for tablets */
+    }
+}
+
+/* Large screens (desktop) */
+@media (min-width: 1024px) {
+    .images-grid {
+        grid-template-columns: 1fr 1fr 1fr 1fr; /* Four columns for desktops */
+    }
+}
