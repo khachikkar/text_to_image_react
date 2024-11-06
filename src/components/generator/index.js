@@ -62,14 +62,14 @@ const handleChange = (e)=>{
 
             const fileName = `${Date.now()}.png`;
 
-            const { data: fileData, error: uploadError } = await supabase.storage
+            const { data: fileData } = await supabase.storage
                 .from('t2image')  // Replace with your bucket name
                 .upload(fileName, resultBlob, {
                     cacheControl: '3600',
                     upsert: false,
                 });
-
-            if (uploadError) throw uploadError;
+    console.log(fileData)
+            // if (uploadError) throw new  uploadError;
 
             // Retrieve the public URL of the stored image
             const { publicURL } = supabase.storage
