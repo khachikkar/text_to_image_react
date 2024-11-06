@@ -10,6 +10,8 @@
     padding: 10px;
     grid-template-columns: 1fr; /* Default: Single column for mobile */
     /*background-color: red;*/
+    /*grid-auto-flow: dense; !* Ensures content is reversed *!*/
+    /*direction: rtl;*/
 }
 
 /* Medium screens (tablets) */

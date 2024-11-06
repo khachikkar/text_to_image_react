@@ -32,7 +32,7 @@ const handleChange = (e)=>{
         console.log(data);
         setIsLoading(true);
         setRes(inputVal);
-        setInputVal("");
+
         setInit(false);
 
         try {
@@ -60,7 +60,7 @@ const handleChange = (e)=>{
             // const imgUrl = URL.createObjectURL(resultBlob);
             // setImgUrl(imgUrl);
 
-            const fileName = `${Date.now()}.png`;
+            const fileName = `${Date.now()}${inputVal}.png`;
 
             const { data: fileData } = await supabase.storage
                 .from('t2image')  // Replace with your bucket name
@@ -84,6 +84,8 @@ const handleChange = (e)=>{
         } catch (error) {
             console.error("Network or other error:", error);
             setIsLoading(false);
+        }finally {
+            setInputVal("");
         }
     };
 
