@@ -5,8 +5,11 @@ import {Image} from "antd";
 
 const Community = ({loading, images}) => {
 
-
+    images.reverse();
     if (loading) return <div>Loading images...</div>;
+
+
+
 
     return (
         <div className="community">
@@ -16,11 +19,8 @@ const Community = ({loading, images}) => {
                 const end = url.indexOf(".");
                     return (
                         <div key={index}>
-                            {/*<img*/}
-                            {/*    src={`https://grvmrfcaoijjkwosfekd.supabase.co/storage/v1/object/public/t2image/${url}`}*/}
-                            {/*    alt='community-img' className="community-image"/>*/}
                             <Image src={`https://grvmrfcaoijjkwosfekd.supabase.co/storage/v1/object/public/t2image/${url}`} className="community-image"  alt='community-img' />
-                            <p>{url.slice(13, end)}</p>
+                            <p><b>Prompt</b> : {url.slice(13, end)}</p>
                         </div>
                     )
 

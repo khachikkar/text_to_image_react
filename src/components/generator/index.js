@@ -106,6 +106,7 @@ const handleChange = (e)=>{
                         isLoading
                             ?
                             <div>
+                                <p className="wait">Your generation can be 2-4 minutes: Wait for magic</p>
                                 <img id="loading"
                                      src="https://i.pinimg.com/originals/6a/ea/10/6aea10bff720c86ed8faa02f2cf6e211.gif"
                                      alt="aa"/>
