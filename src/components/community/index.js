@@ -1,5 +1,6 @@
 import React from 'react';
 import "./index.css"
+import {Image} from "antd";
 
 
 const Community = ({loading, images}) => {
@@ -15,9 +16,10 @@ const Community = ({loading, images}) => {
                 const end = url.indexOf(".");
                     return (
                         <div key={index}>
-                            <img
-                                src={`https://grvmrfcaoijjkwosfekd.supabase.co/storage/v1/object/public/t2image/${url}`}
-                                alt='community-img' className="community-image"/>
+                            {/*<img*/}
+                            {/*    src={`https://grvmrfcaoijjkwosfekd.supabase.co/storage/v1/object/public/t2image/${url}`}*/}
+                            {/*    alt='community-img' className="community-image"/>*/}
+                            <Image src={`https://grvmrfcaoijjkwosfekd.supabase.co/storage/v1/object/public/t2image/${url}`} className="community-image"  alt='community-img' />
                             <p>{url.slice(13, end)}</p>
                         </div>
                     )
