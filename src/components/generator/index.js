@@ -10,7 +10,7 @@ import {
     FOLDER_NAME,
     EMAIL_SERVICE_ID,
     EMAIL_TEMPLATE_ID, EMAIL_USER_ID
-} from "../../constants";
+} from "../../constants.js";
 
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
