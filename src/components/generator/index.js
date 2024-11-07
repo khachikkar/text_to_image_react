@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import "./index.css"
-
-
+import emailjs from 'emailjs-com';
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = 'https://grvmrfcaoijjkwosfekd.supabase.co';
@@ -24,11 +23,38 @@ const handleChange = (e)=>{
 }
     console.log(inputVal)
 
+    const sendEmailNotification = () => {
+        const templateParams = {
+            message: `A new image has been generated:`,
+            user_prompt: inputVal
+        };
+
+        emailjs.send(
+            'service_1xa4dbd',     // Replace with your EmailJS Service ID
+            'template_4rapfrh',     // Replace with your EmailJS Template ID
+            templateParams,
+            'epbMqS-2RYpB_FFsQ'          // Replace with your EmailJS User ID
+        )
+            .then((response) => {
+                console.log('Email sent successfully!', response.status, response.text);
+            })
+            .catch((error) => {
+                console.error('Failed to send email:', error);
+            });
+    };
+
+
 
 
 
 
     const handlePrompt = async (data) => {
+
+        if(data.inputs == ""){
+            alert("Please enter a Prompt for Generation")
+            return
+        }
+
         console.log(data);
         setIsLoading(true);
         setRes(inputVal);
@@ -79,7 +105,7 @@ const handleChange = (e)=>{
             console.log(publicURL, ">>>>>>>>>>>>>>")
             setIsLoading(false);
             setImgUrl(fileName); // Use public URL to display the image
-
+            sendEmailNotification();
 
         } catch (error) {
             console.error("Network or other error:", error);
@@ -120,7 +146,7 @@ const handleChange = (e)=>{
                             <div>
                                 <h2>Prompt:{res}</h2>
                                 <img id="img" src={`https://grvmrfcaoijjkwosfekd.supabase.co/storage/v1/object/public/t2image/${imgUrl}`} alt="gg" />
-                                <a href={imgUrl} download="generated_img">
+                                <a href={imgUrl} download={`generated_img_${res}`}>
                                     <button id="downloadButton">Download Image</button>
                                 </a>
                             </div>

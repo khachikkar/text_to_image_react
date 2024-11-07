@@ -20,7 +20,7 @@ const Community = ({loading, images}) => {
                     return (
                         <div key={index}>
                             <Image src={`https://grvmrfcaoijjkwosfekd.supabase.co/storage/v1/object/public/t2image/${url}`} className="community-image"  alt='community-img' />
-                            <p><b>Prompt</b> : {url.slice(13, end)}</p>
+                            <p><b>Prompt</b> : {url.slice(13, end) || "Empty Prompt"}</p>
                         </div>
                     )
 
