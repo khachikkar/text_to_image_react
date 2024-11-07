@@ -2,16 +2,15 @@ import React, {useState} from 'react';
 import "./index.css"
 import emailjs from 'emailjs-com';
 import { createClient } from '@supabase/supabase-js';
-
-const SUPABASE_URL = process.env.REACT_APP_SUPABASE_URL;
-const SUPABASE_ANON_KEY = process.env.REACT_APP_SUPABASE_ANON_KEY;
-const FETCH_URL = process.env.REACT_APP_FETCH_URL;
-const EMAIL_SERVICE_ID = process.env.REACT_APP_EMAIL_SERVICE_ID;
-const EMAIL_TEMPLATE_ID = process.env.REACT_APP_EMAIL_SERVICE_ID;
-const EMAIL_USER_ID = process.env.REACT_APP_EMAIL_USER_ID;
-const BARER_KEY = process.env.REACT_APP_BARER_KEY;
-const FOLDER_NAME = process.env.REACT_APP_FOLDER_NAME;
-
+import {
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY,
+    FETCH_URL,
+    BARER_KEY,
+    FOLDER_NAME,
+    EMAIL_SERVICE_ID,
+    EMAIL_TEMPLATE_ID, EMAIL_USER_ID
+} from "../../constants";
 
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -58,7 +57,7 @@ const handleChange = (e)=>{
 
     const handlePrompt = async (data) => {
 
-        if(data.inputs === ""){
+        if(data.inputs == ""){
             alert("Please enter a Prompt for Generation")
             return
         }
