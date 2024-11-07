@@ -57,7 +57,7 @@ const handleChange = (e)=>{
 
     const handlePrompt = async (data) => {
 
-        if(data.inputs == ""){
+        if(data.inputs === ""){
             alert("Please enter a Prompt for Generation")
             return
         }
