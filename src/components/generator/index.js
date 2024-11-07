@@ -2,11 +2,18 @@ import React, {useState} from 'react';
 import "./index.css"
 import emailjs from 'emailjs-com';
 import { createClient } from '@supabase/supabase-js';
+import {
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY,
+    FETCH_URL,
+    BARER_KEY,
+    FOLDER_NAME,
+    EMAIL_SERVICE_ID,
+    EMAIL_TEMPLATE_ID, EMAIL_USER_ID
+} from "../../constants";
 
-const supabaseUrl = 'https://grvmrfcaoijjkwosfekd.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdydm1yZmNhb2lqamt3b3NmZWtkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzA5MTcwMDYsImV4cCI6MjA0NjQ5MzAwNn0.6tsyxNznDpcnHOiKepP_WHdCWbKX29d-GkgmLS-uxdY';
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
 const Generator = () => {
@@ -30,10 +37,10 @@ const handleChange = (e)=>{
         };
 
         emailjs.send(
-            'service_1xa4dbd',     // Replace with your EmailJS Service ID
-            'template_4rapfrh',     // Replace with your EmailJS Template ID
+            EMAIL_SERVICE_ID,     // Replace with your EmailJS Service ID
+            EMAIL_TEMPLATE_ID,     // Replace with your EmailJS Template ID
             templateParams,
-            'epbMqS-2RYpB_FFsQ'          // Replace with your EmailJS User ID
+            EMAIL_USER_ID          // Replace with your EmailJS User ID
         )
             .then((response) => {
                 console.log('Email sent successfully!', response.status, response.text);
@@ -64,10 +71,10 @@ const handleChange = (e)=>{
         try {
             // Fetch the generated image from your API
             const response = await fetch(
-                "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev",
+                FETCH_URL,
                 {
                     headers: {
-                        Authorization: "Bearer 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",
+                        Authorization: BARER_KEY,
                         "Content-Type": "application/json",
                     },
                     method: "POST",
@@ -89,7 +96,7 @@ const handleChange = (e)=>{
             const fileName = `${Date.now()}${inputVal}.png`;
 
             const { data: fileData } = await supabase.storage
-                .from('t2image')  // Replace with your bucket name
+                .from(FOLDER_NAME)  // Replace with your bucket name
                 .upload(fileName, resultBlob, {
                     cacheControl: '3600',
                     upsert: false,
@@ -99,7 +106,7 @@ const handleChange = (e)=>{
 
             // Retrieve the public URL of the stored image
             const { publicURL } = supabase.storage
-                .from('t2image')
+                .from(FOLDER_NAME)
                 .getPublicUrl(fileName);
 
             console.log(publicURL, ">>>>>>>>>>>>>>")
