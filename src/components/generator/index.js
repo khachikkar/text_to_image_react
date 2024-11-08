@@ -12,7 +12,7 @@ import {
     EMAIL_TEMPLATE_ID, EMAIL_USER_ID
 } from "../../constants";
 import {ImageContext} from "../../context";
-
+import loader from "../../img/loader.gif"
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -149,7 +149,7 @@ const handlePrompt = async (data) => {
                             <div>
                                 <p className="wait">Your generation can be 2-4 minutes: Wait for magic</p>
                                 <img id="loading"
-                                     src="https://i.pinimg.com/originals/6a/ea/10/6aea10bff720c86ed8faa02f2cf6e211.gif"
+                                     src={loader}
                                      alt="aa"/>
                             </div>
                             :
