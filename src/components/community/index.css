@@ -1,3 +1,19 @@
+.community{
+    background-color: #0c0b0b;
+    color: white;
+    padding: 50px 0;
+
+
+    h2{
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}
+
+b{
+   color: #b1b0b0;
+}
+
 .community-image {
     width: 100%; /* Ensures image scales within grid cell */
     height: auto; /* Maintains aspect ratio */
@@ -12,6 +28,10 @@
     /*background-color: red;*/
     /*grid-auto-flow: dense; !* Ensures content is reversed *!*/
     /*direction: rtl;*/
+
+    p{
+        margin-top: 10px;
+    }
 }
 
 /* Medium screens (tablets) */

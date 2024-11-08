@@ -31,12 +31,10 @@ const Footer = () => {
 };
 
 const footerStyle = {
-    backgroundColor: '#000',
-    color: "#fff",
+    borderTop: "1px solid #333",
+    color: "white",
     padding: '40px 20px',
     width: '100%',
-    // height: '200px',
-
 };
 
 const iconStyle = {

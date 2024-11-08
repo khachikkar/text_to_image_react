@@ -1,5 +1,7 @@
+.App{
+    background-color: #0c0b0b;
+}
+
 .footer{
-    background-color: black;
-    color: white;
     height: 200px;
 }

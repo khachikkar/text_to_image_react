@@ -1,0 +1,59 @@
+/* index.css */
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    background-color: #0c0b0b;
+    text-align: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stats > div {
+    flex: 1;
+    padding: 10px;
+}
+
+.stats h3 {
+    font-size: 2.5rem;
+    color: #8c8b8b;
+    margin: 0;
+}
+
+.stats h4 {
+    font-size: 1.2rem;
+    color: #555;
+    margin: 0;
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 768px) {
+    .stats {
+        flex-direction: column;
+    }
+
+    .stats h3 {
+        font-size: 2rem;
+    }
+
+    .stats h4 {
+        font-size: 1rem;
+    }
+}
+
+/* Small screens (mobile) */
+@media (max-width: 480px) {
+    .stats {
+        gap: 10px;
+    }
+
+    .stats h3 {
+        font-size: 1.8rem;
+    }
+
+    .stats h4 {
+        font-size: 0.9rem;
+    }
+}

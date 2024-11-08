@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import {supabase} from "./components/generator";
 import {ImageContext} from "./context";
 import Footer from "./components/Footer";
+import Stats from "./components/Stats";
 
 
 
@@ -56,6 +57,7 @@ return (
 
     <div className="App">
 <Generator  images={images} />
+<Stats />
 <Community />
 <Footer />
     </div>
