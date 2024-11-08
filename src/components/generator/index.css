@@ -46,8 +46,14 @@ main {
     height: 50px;
     font-size: 16px;
     padding: 10px;
-    border: 1px solid lightgray;
+    border: none;
     border-radius: 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.09); /* Semi-transparent white background */
+    backdrop-filter: blur(10px); /* Blurs the background behind the input */
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+    outline: none; /* Removes the default outline */
+
 }
 
 #button{
