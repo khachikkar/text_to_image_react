@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useContext,useMemo, useState} from 'react';
 import "./index.css"
 import emailjs from 'emailjs-com';
 import { createClient } from '@supabase/supabase-js';
@@ -11,6 +11,7 @@ import {
     EMAIL_SERVICE_ID,
     EMAIL_TEMPLATE_ID, EMAIL_USER_ID
 } from "../../constants";
+import {ImageContext} from "../../context";
 
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -23,14 +24,17 @@ const Generator = () => {
     const [imgUrl, setImgUrl] = useState("")
     const [res, setRes] = useState("")
     const [init, setInit] = useState(true)
+    const {images} =  useContext(ImageContext)
 
-const handleChange = (e)=>{
+
+
+const handleChange = useCallback((e) => {
         const val = e.target.value;
-        setInputVal(val)
-}
-    console.log(inputVal)
+        setInputVal(val);
+    }, []);
 
-    const sendEmailNotification = () => {
+
+const sendEmailNotification = () => {
         const templateParams = {
             message: `A new image has been generated:`,
             user_prompt: inputVal
@@ -49,13 +53,7 @@ const handleChange = (e)=>{
                 console.error('Failed to send email:', error);
             });
     };
-
-
-
-
-
-
-    const handlePrompt = async (data) => {
+const handlePrompt = async (data) => {
 
         if(data.inputs === ""){
             alert("Please enter a Prompt for Generation")
@@ -93,7 +91,10 @@ const handleChange = (e)=>{
             // const imgUrl = URL.createObjectURL(resultBlob);
             // setImgUrl(imgUrl);
 
-            const fileName = `${Date.now()}${inputVal}.png`;
+            console.log(inputVal, "OOOOO")
+            const finInputVal = inputVal.replace(/\s/g, '_')
+
+            const fileName = `${Date.now()}${finInputVal}.png`;
 
             const { data: fileData } = await supabase.storage
                 .from(FOLDER_NAME)  // Replace with your bucket name
@@ -124,9 +125,16 @@ const handleChange = (e)=>{
 
 
 
+    const b = useMemo(() => {
+        return images[Math.floor(Math.random() * images.length)];
+    }, [images]);
+
 
     return (
-        <div className="mCont">
+        <div className="mCont"
+             style={{
+                 backgroundImage: `url(${SUPABASE_URL}/storage/v1/object/public/t2image/${b})` || "none"
+             }}>
             <main>
                 <section>
                     <h2>Image Generator</h2>

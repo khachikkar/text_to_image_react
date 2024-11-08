@@ -4,6 +4,7 @@ import Generator from "./components/generator";
 import Community from "./components/community";
 import {useEffect, useState} from "react";
 import {supabase} from "./components/generator";
+import {ImageContext} from "./context";
 
 
 
@@ -25,13 +26,14 @@ function App() {
                 .list('', { limit: 100 });  // Adjust the limit as needed
 
             console.log("Fetched data:", data);
+            // setCount(data.length)
             if (error) {
                 throw error;
             }
 
             // Generate public URLs for each image
             const imageUrls = data.map((file) => {
-                console.log(file.name, ">>>>>>>");
+
                 return file.name;
             });
 
@@ -43,21 +45,21 @@ function App() {
         }
     }, [setImages, setLoading]); // Add dependencies here if needed
 
-    useEffect(() => {
-        fetchImages();
-    }, [fetchImages, loading]);
+useEffect(() => {
+    fetchImages();
+    }, []);
 
-    console.log(images);
 
-    console.log(images);
 
 
 
   return (
+<ImageContext.Provider value={{images, loading}}>
     <div className="App">
-<Generator />
-        <Community loading={loading} images={images} />
+<Generator  images={images} />
+<Community />
     </div>
+</ImageContext.Provider>
   );
 }
 
