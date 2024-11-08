@@ -5,7 +5,7 @@ import Community from "./components/community";
 import {useEffect, useState} from "react";
 import {supabase} from "./components/generator";
 import {ImageContext} from "./context";
-
+import Footer from "./components/Footer";
 
 
 
@@ -14,11 +14,10 @@ import {ImageContext} from "./context";
 
 function App() {
 
-
     const [images, setImages] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const fetchImages = useCallback(async () => {
+const fetchImages = useCallback(async () => {
         try {
             const { data, error } = await supabase
                 .storage
@@ -44,7 +43,6 @@ function App() {
             setLoading(false);
         }
     }, [setImages, setLoading]); // Add dependencies here if needed
-
 useEffect(() => {
     fetchImages();
     }, [fetchImages]);
@@ -53,12 +51,17 @@ useEffect(() => {
 
 
 
-  return (
+return (
 <ImageContext.Provider value={{images, loading}}>
+
     <div className="App">
 <Generator  images={images} />
 <Community />
+<Footer />
     </div>
+
+
+
 </ImageContext.Provider>
   );
 }
