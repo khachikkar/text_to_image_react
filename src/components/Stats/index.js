@@ -3,12 +3,12 @@ import CountUp from "react-countup";
 import "./index.css"
 
 
-
 const Stats = () => {
+
     return (
         <div className="stats">
             <div>
-                <h3><CountUp end={300} duration={2}/>+</h3>
+                <h3><CountUp end={30} duration={2}/>+</h3>
                 <h4>Generated Images</h4>
             </div>
 
