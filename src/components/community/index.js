@@ -11,7 +11,7 @@ const Community = () => {
     images.reverse();
 
 
-    if (loading) return <div>Loading images...</div>;
+    if (loading) return <div className="strong">Loading images...</div>;
 
 
 

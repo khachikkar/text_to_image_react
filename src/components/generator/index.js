@@ -14,6 +14,7 @@ import {
 import {ImageContext} from "../../context";
 import loader from "../../img/loader.gif"
 
+
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
@@ -53,7 +54,8 @@ const sendEmailNotification = () => {
                 console.error('Failed to send email:', error);
             });
     };
-const handlePrompt = async (data) => {
+
+    const handlePrompt = async (data) => {
 
         if(data.inputs === ""){
             alert("Please enter a Prompt for Generation")
@@ -102,7 +104,7 @@ const handlePrompt = async (data) => {
                     cacheControl: '3600',
                     upsert: false,
                 });
-    console.log(fileData)
+            console.log(fileData)
             // if (uploadError) throw new  uploadError;
 
             // Retrieve the public URL of the stored image
@@ -140,7 +142,7 @@ const handlePrompt = async (data) => {
                     <h2>Image Generator</h2>
                     <p>Please Describe what image you want to have?</p>
                     <input onChange={(e)=>handleChange(e)} value={inputVal} id="input" type="text" placeholder="Your image prompt"/>
-                    <input onClick={()=>handlePrompt({"inputs": inputVal})} id="button" type="button" value="Generate"/>
+                    <input   onClick={()=>handlePrompt({"inputs": inputVal})} id="button" type="button" value="Generate" />
 
 
                     {
@@ -161,9 +163,9 @@ const handlePrompt = async (data) => {
                             <div>
                                 <h2>Prompt:{res}</h2>
                                 <img id="img" src={`https://grvmrfcaoijjkwosfekd.supabase.co/storage/v1/object/public/t2image/${imgUrl}`} alt="gg" />
-                                <a href={imgUrl} download={`generated_img_${res}`}>
-                                    <button id="downloadButton">Download Image</button>
-                                </a>
+                                {/*<a href={imgUrl} download={`generated_img_${res}`}>*/}
+                                {/*    <button id="downloadButton">Download Image</button>*/}
+                                {/*</a>*/}
                             </div>
                     }
                 </section>

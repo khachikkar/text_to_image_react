@@ -57,7 +57,7 @@ return (
 
     <div className="App">
 <Generator  images={images} />
-<Stats />
+<Stats images={images}/>
 <Community />
 <Footer />
     </div>
